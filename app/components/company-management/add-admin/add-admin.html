@@ -1,0 +1,44 @@
+<md-dialog flex="40" flex-xs="90" flex-sm="60" class="add-client">
+    <div>
+        <md-toolbar layout="row" layout-align="center" class="view-head">
+            <p ng-if="vm.userRole !== 3">Add a new user</p>
+            <p ng-if="vm.userRole === 3">Add a new Financial Advisor </p>
+        </md-toolbar>
+
+        <div class="content-add">
+            <form name="vm.adminForm" ng-submit="vm.save()" novalidate>
+                <div class="add-user-input" layout="column">
+                    <md-input-container>
+                        <label>Email</label>
+                        <input ng-model="vm.data.email" type="email" name="email" required maxlength="32"
+                               ng-pattern="/^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/"
+                        >
+                        <div ng-messages="vm.adminForm.email.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Email max length 32.</div>
+                            <div ng-message="pattern">Must look like an e-mail address.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container ng-if="vm.userRole === 2">
+                        <label>Choose a role</label>
+                        <md-select ng-model="vm.data.role" name="select" required="">
+                            <md-option value="3">Company admin</md-option>
+                            <md-option value="1">Financial advisor</md-option>
+
+                        </md-select>
+                        <div ng-messages="vm.adminForm.select.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="bot-btn" layout="row" layout-align="space-between">
+                    <md-button class="md-raised md-primary" type="submit">Send invite
+                    </md-button>
+                    <md-button class="md-raised" ng-click="vm.cancel()">Close</md-button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</md-dialog>

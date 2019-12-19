@@ -1,0 +1,17 @@
+<md-menu>
+
+    <i class="material-icons" ng-click="$mdMenu.open($event)">more_vert</i>
+
+    <md-menu-content width="4">
+
+        <md-menu-item>
+            <md-button ng-click="vm.addBlock(item, $index)">Edit</md-button>
+        </md-menu-item>
+
+        <md-menu-item>
+            <md-button ng-click="vm.deleteBlock(item.id, $index)">Delete</md-button>
+        </md-menu-item>
+
+    </md-menu-content>
+
+</md-menu>

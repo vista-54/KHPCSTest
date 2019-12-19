@@ -1,0 +1,72 @@
+.tabs {
+
+  overflow: hidden;
+
+  .logo-tabs {
+    padding: 20px 0 5px 0;
+  }
+  .logo-tabs img {
+    height: 100px;
+  }
+  .log-btn {
+    display: flex;
+  }
+
+  .nav-menu {
+    background-color: #001041;
+    height: 48px;
+  }
+  .nav {
+    p {
+      text-transform: none;
+    }
+  }
+  .exit-menu {
+    height: 48px;
+    display: flex;
+  }
+  md-nav-ink-bar {
+    background: white;
+  }
+  .md-button._md-nav-button {
+    color: white;
+  }
+  .md-button._md-nav-button.md-unselected {
+    color: gray;
+  }
+  .md-button._md-nav-button {
+    padding: 12px 30px;
+  }
+
+  .side-menu {
+    height: fit-content;
+  }
+
+  .burg {
+    display: none;
+    color: #fff;
+    padding: 14px;
+  }
+
+  .md-sidenav-right {
+     //height: fit-content;
+   }
+
+  @media (max-width: 835px) {
+    .nav {
+      display: none;
+    }
+    .burg {
+      display: flex;
+    }
+  }
+  .md-button {
+    text-transform: capitalize;
+  }
+}
+.log-btn{
+  display: flex !important;
+}
+.log-btn i {
+  margin-right: 5px;
+}

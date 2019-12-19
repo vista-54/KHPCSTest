@@ -1,0 +1,63 @@
+html, body, p{
+  margin: 0;
+  padding: 0;
+}
+
+md-dialog {
+  overflow: visible;
+}
+
+i {
+  cursor: pointer;
+}
+
+.view-head{
+  line-height: 60px;
+}
+
+.bot-btn button {
+  box-shadow: none !important;
+  line-height: 0;
+  min-height: 32px;
+  margin: 0;
+  min-width: 98px;
+  background-color: #001041 !important;
+}
+
+.bot-btn button:last-child {
+  background-color: #fff !important;
+  border: 2px solid #001041;
+  margin-left: 40px;
+  color: #001041 !important;
+}
+
+md-list-item .md-list-item-inner > md-checkbox{
+  margin-right: 0;
+  margin-left: 10px;
+}
+
+md-toolbar{
+  background-color: #001041 !important;
+}
+
+
+//clicked element
+
+.pointer {
+  cursor: pointer;
+  outline:none;
+  user-select: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

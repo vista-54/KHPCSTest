@@ -1,0 +1,31 @@
+<md-dialog flex="30" class="add-block">
+
+    <div class="create-window">
+
+        <md-toolbar ng-if="vm.type" layout="row" layout-align="center" class="view-head">
+            <p>Please enter new section name</p>
+        </md-toolbar>
+        <md-toolbar ng-if="!vm.type" layout="row" layout-align="center" class="view-head">
+            <p>Edit section name</p>
+        </md-toolbar>
+        <div class="content">
+            <form name="vm.blockForm">
+                <div class="all-input">
+                    <md-input-container>
+                        <label>Name section</label>
+                        <input type="text" ng-model="vm.data.name" name="name" md-autofocus required maxlength="32">
+                        <div ng-messages="vm.blockForm.name.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
+            <div class="bot-btn" layout="" layout-align="space-between">
+                <md-button class="md-raised md-primary" ng-click="vm.saveBlock()">Save</md-button>
+                <md-button class="md-raised" ng-click="vm.cancel()">Cancel</md-button>
+            </div>
+        </div>
+    </div>
+</md-dialog>
+
+

@@ -1,0 +1,70 @@
+.passing-question {
+
+  .question-text {
+    width: 98%;
+  }
+  .buttons-bar {
+    padding-right: 10px;
+    button {
+      text-transform: capitalize;
+      border: 2px solid #3f51b5;
+      color: #3f51b5;
+      line-height: 0;
+      min-width: 98px;
+
+    }
+  }
+
+  .quest-info{
+    padding: 20px;
+  }
+
+  .radio-btn-info{
+    padding-left: 30px;
+  }
+
+  md-radio-button .md-ripple-container {
+    display: none;
+  }
+
+  md-autocomplete {
+    max-width: 98%;
+  }
+  md-autocomplete input {
+    padding: 0 0 0 10px;
+
+  }
+}
+
+///////////////////////
+//.firstQuest {
+//
+//  display: flex;
+//  justify-content: center;
+//
+//  .contentQuest {
+//    padding: 30px 0;
+//    display: flex;
+//    flex-direction: column;
+//    width: 70%;
+//  }
+//
+//  h1 {
+//    text-align: center;
+//  }
+//
+//  .contentQuest p {
+//    line-height: 2;
+//  }
+//
+//  .questNext {
+//    display: flex;
+//    justify-content: flex-end;
+//    padding-top: 20px;
+//  }
+//
+//  button {
+//    text-transform: capitalize;
+//  }
+//
+//}

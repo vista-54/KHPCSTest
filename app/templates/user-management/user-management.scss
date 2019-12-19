@@ -1,0 +1,51 @@
+.um-main {
+
+  md-card {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  td:nth-child(2) {
+    text-transform: capitalize;
+  }
+
+  .search {
+    width: 95%;
+    padding: 10px 0 10px 40px;
+  }
+
+  .search md-input-container {
+    margin-bottom: 0;
+  }
+
+  .table {
+    width: 95%;
+  }
+
+  table.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2), table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
+    padding: 5px;
+  }
+
+  table.md-table td.md-cell:last-child{
+    padding: 24px 24px 0 0;
+    display: flex;
+  }
+
+  .add-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #c6c6c6;
+    cursor: pointer;
+  }
+
+  .none-icon {
+    cursor: default;
+  }
+}
+.start-btn{
+  background: #fff;
+  border: 2px solid #3f51b5;
+  margin: 0;
+  width: 100%;
+}

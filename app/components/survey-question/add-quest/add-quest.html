@@ -1,0 +1,316 @@
+<md-dialog flex="40" flex-xs="90" flex-sm="60" class="addQuest" aria-label="Enter the question">
+
+
+    <form name="vm.questForm" ng-submit="vm.save()" novalidate>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout="row" layout-align="center center">
+                <h2>Enter the question</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="dialog-content" layout="column">
+
+            <div>
+                <md-input-container class="main-input">
+                    <label>Identifier</label>
+                    <input ng-model="vm.data.identifier" name="identifier" required minlength="3">
+                    <div ng-messages="vm.questForm.identifier.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="minlength">Name min length 3.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-input-container class="main-input">
+                    <label>Name your question</label>
+                    <input ng-model="vm.data.title" name="title" required minlength="3">
+                    <div ng-messages="vm.questForm.title.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="minlength">Name min length 3.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-input-container class="radio-input">
+                    <label>Select a type</label>
+                    <md-select ng-model="vm.data.type" name="type" required>
+                        <md-option ng-value="0"><em>Check Box</em></md-option>
+                        <md-option ng-value="1"><em>Radio</em></md-option>
+                        <md-option ng-value="2"><em>Text</em></md-option>
+                        <md-option ng-value="3"><em>Date</em></md-option>
+                        <md-option ng-value="4"><em>Country</em></md-option>
+                    </md-select>
+                    <div ng-messages="vm.questForm.type.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div ng-if="vm.data.type == 1 || vm.data.type == 0">
+
+                <md-button class="add-answer-button" ng-click="vm.addAnsver()">
+                    Add Answer
+                </md-button>
+
+                <div class="answer-container">
+                    <div layout="row" ng-repeat="answers in vm.data.answers" class="answer"
+                         ng-if="(vm.data.type == 1 || vm.data.type == 0) && !answers.delete">
+
+                        <div flex="90" layout="column">
+                            <div layout="row">
+                                <md-input-container flex="50">
+                                    <label>Name</label>
+                                    <input ng-model="answers.answer_text" name="answer_text" required minlength="1">
+                                    <div ng-messages="vm.questForm.answer_text.$error">
+                                        <div ng-message="required">This is required.</div>
+                                        <div ng-message="minlength">Name min length 1.</div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container ng-if="vm.data.type == 1" class="next-quest-radio" flex="50">
+                                    <label class="next-label">Next question: {{answers.next_question}}
+                                        <p ng-if="answers.next_question === null">undefined</p>
+
+                                    </label>
+                                    <md-select class="md-block-restyle"
+                                               aria-label="Select"
+                                               ng-model="answers.next_question"
+                                               md-on-close="vm.checkValidLoop()"
+                                    >
+                                        <md-option ng-value="null" ng-click="vm.changeNextQuest(quest)">
+                                            undefined
+                                        </md-option>
+                                        <md-option ng-repeat="quest in  vm.questions"
+                                                   ng-click="vm.changeNextQuest(quest , answers)"
+                                                   ng-value="quest.identifier"
+                                                   ng-if="vm.data.id !== quest.id"
+                                        >
+
+                                            <div flex="" class="pick-next"> {{quest.title}}</div>
+
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <md-input-container class="md-block" style="margin: 0;" ng-if="vm.data.type == 1">
+                                <label>Additional information</label>
+                                <textarea ng-model="vm.data.answers[$index].information" rows="2"></textarea>
+                            </md-input-container>
+
+                        </div>
+
+                        <div flex="10">
+                            <i class="material-icons delAns" ng-click="vm.deleteAnsver(answers, $index)">close</i>
+                        </div>
+
+                    </div>
+                    <md-input-container class="main-input" ng-if="vm.data.type !== 1">
+                        <label class="next-label">Next question: {{vm.data.next_question}}
+                            <p ng-if="vm.data.next_question === null">undefined</p>
+                        </label>
+
+                        <md-select class="md-block-restyle" ng-model="vm.data.next_question"
+                                   aria-label="">
+                            <md-option ng-value="null" ng-click="vm.changeNextQuest(quest)">
+                                undefined
+                            </md-option>
+                            <md-option ng-repeat="quest in  vm.questions"
+                                       ng-click="vm.changeNextQuest(quest)"
+                                       ng-value="quest.identifier"
+                                       ng-if="vm.data.id !== quest.id"
+                            >
+                                <div flex="" class="pick-next"> {{quest.title}}</div>
+
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" ng-if="vm.data.type !== 1">
+                        <label>Additional information</label>
+                        <textarea ng-model="vm.data.information" rows="2"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div layout="row" flex="50" ng-if="vm.data.type == 2">
+                <md-input-container>
+                    <label>Select a validation type</label>
+                    <md-select ng-model="vm.data.validation_type" name="validation_type" required>
+                        <md-option ng-value="0"><em>Text and numbers</em></md-option>
+                        <md-option ng-value="1"><em>Only text</em></md-option>
+                        <md-option ng-value="2"><em>Only numbers</em></md-option>
+                    </md-select>
+                    <div ng-messages="vm.questForm.validation_type.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container flex="50">
+                    <label>Characters limit</label>
+                    <input ng-model="vm.data.characters_limit" name="characters_limit" required maxlength="4">
+                    <div ng-messages="vm.questForm.characters_limit.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="maxlength">Name max length 4.</div>
+                    </div>
+                </md-input-container>
+
+            </div>
+
+            <div ng-if="vm.data.type == 2 || vm.data.type == 3" style="overflow: -webkit-paged-x;">
+                <md-input-container class="main-input">
+                    <label class="next-label">Next question: {{vm.data.next_question}}
+                        <p ng-if="vm.data.next_question === null">undefined</p>
+                    </label>
+
+                    <md-select class="md-block-restyle" ng-model="vm.data.next_question"
+                               aria-label="">
+
+                        <md-option ng-value="null" ng-click="vm.changeNextQuest(quest)">
+                            undefined
+                        </md-option>
+
+                        <md-option ng-repeat="quest in  vm.questions"
+                                   ng-click="vm.changeNextQuest(quest)"
+                                   ng-value="quest.identifier"
+                                   ng-if="vm.data.id !== quest.id">
+                            <div flex="" class="pick-next"> {{quest.title}}</div>
+
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Additional informations</label>
+                    <textarea ng-model="vm.data.information" rows="3"></textarea>
+                </md-input-container>
+            </div>
+
+            <div ng-if="vm.data.type == 4">
+                <div>
+                    <md-select class="md-block-restyle" ng-model="vm.data.next_question"
+                               aria-label="">
+                        <md-option ng-value="null" ng-click="vm.changeNextQuest(quest)">
+                            undefined
+                        </md-option>
+                        <md-option ng-repeat="quest in  vm.questions"
+                                   ng-click="vm.changeNextQuest(quest)"
+                                   ng-value="quest.identifier"
+                                   ng-if="vm.data.id !== quest.id"
+                        >
+                            <div flex="" class="pick-next"> {{quest.title}}</div>
+
+                        </md-option>
+                    </md-select>
+
+                    <md-input-container class="md-block"">
+                        <label>Additional information</label>
+                        <textarea ng-model="vm.data.information" rows="2"></textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout="row" layout-xs="column" layout-align="center center">
+
+                    <div hide show-xs flex="50" flex-xs="100" layout="row" layout-align="end center">
+                        <span>Country dependency:&nbsp;</span>
+                        <md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="vm.countrySwitch">
+                        </md-switch>
+                    </div>
+
+                    <div flex="50" flex-xs="100" ng-if="vm.countrySwitch === true">
+                        <md-button class="add-answer-button_country" ng-click="vm.addAnsver()">
+                            Add dependency
+                        </md-button>
+                    </div>
+
+                    <div flex="50" flex-xs="100" ng-if="vm.countrySwitch === false">
+
+                    </div>
+
+                    <div hide show-gt-xs flex="50" flex-xs="100" layout="row" layout-align="end center">
+                        <span>Country dependency:&nbsp;</span>
+                        <md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="vm.countrySwitch">
+                        </md-switch>
+                    </div>
+
+                </div>
+
+                <div layout="row" layout-align="space-between center"
+                     ng-if="vm.countrySwitch === true && !answer.delete" flex="100"
+                     ng-repeat="(indexAnswer, answer) in vm.data.answers">
+
+                    <div flex="45">
+                        <md-input-container title={{vm.countryInputTitle(answer.answer_text)}} class="country_input">
+                            <label>Countries</label>
+                            <md-select ng-model="answer.answer_text"
+                                       md-on-open="vm.countryOnOpen(answer.answer_text)"
+                                       md-on-close="vm.countryOnClose(answer.answer_text)"
+                                       data-md-container-class="selectdemoSelectHeader"
+                                       multiple
+                                       ng-click="showRepeat = true">
+
+                                <md-optgroup label="Choose a countries"
+                                             ng-if="showRepeat">
+                                    <md-option ng-value="country"
+                                               ng-repeat="country in vm.countryRepeater(answer.answer_text)">
+                                        {{country}}
+                                    </md-option>
+                                </md-optgroup>
+
+                                <md-optgroup label="Choose a countries"
+                                             ng-if="!showRepeat">
+                                    <md-option ng-value="country"
+                                               ng-repeat="country in answer.answer_text">
+                                        {{country}}
+                                    </md-option>
+                                </md-optgroup>
+
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div flex="45">
+                        <md-input-container class="country_input">
+                            <label class="next-label">Next question: {{answers.next_question}}
+                                <p ng-if="answers.next_question === null">undefined</p>
+
+                            </label>
+                            <md-select class="md-block-restyle"
+                                       aria-label="Select"
+                                       ng-model="answer.next_question"
+                                       md-on-close="vm.checkValidLoop()"
+                            >
+                                <md-option ng-value="null" ng-click="vm.changeNextQuest(quest)">
+                                    undefined
+                                </md-option>
+                                <md-option ng-repeat="quest in  vm.questions"
+                                           ng-click="vm.changeNextQuest(quest , answer)"
+                                           ng-value="quest.identifier"
+                                           ng-if="vm.data.id !== quest.id"
+                                >
+
+                                    <div flex="" class="pick-next"> {{quest.title}}</div>
+
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div flex="10">
+                        <i class="material-icons delAns" ng-click="vm.deleteAnsver(answer, $index, true)">
+                            close
+                        </i>
+                    </div>
+                </div>
+            </div>
+
+        </md-dialog-content>
+        <md-dialog-actions class="bot-btn" layout="row" layout-align="space-between center">
+            <md-button class="md-raised md-primary" type="submit">Save</md-button>
+            <md-button class="md-raised" ng-click="vm.cancel()">Cancel</md-button>
+        </md-dialog-actions>
+
+    </form>
+
+
+</md-dialog>

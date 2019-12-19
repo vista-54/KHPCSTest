@@ -1,0 +1,35 @@
+<md-dialog flex="30" class="createTemplateTitle">
+    <div class="createWindow">
+       <md-toolbar class="view-head" layout="row" layout-align="center center">
+            <p>Please enter template name</p>
+        </md-toolbar>
+        <div class="content">
+            <div class="allInput">
+                <form name="vm.templateForm">
+                    <md-input-container>
+                        <label>Name template</label>
+                        <input type="text" ng-model="vm.data.title" md-autofocus
+                               name="name" required maxlength="32">
+                        <div ng-messages="vm.templateForm.name.$error">
+                            <div ng-message="required">This is required.</div>
+                            <!--<div ng-message>Name already exists</div>-->
+                        </div>
+                    </md-input-container>
+                </form>
+            </div>
+
+            <div class="bot-btn" layout="row" layout-align="space-between">
+                <md-button class="md-raised md-primary" ng-click="vm.createTemplate()"
+                           ng-if="vm.showCreateButton">Create</md-button>
+
+                <md-button class="md-raised md-primary" ng-click="vm.saveAsTemplate()"
+                           ng-if="vm.showSaveAsButton">SaveAs</md-button>
+
+                <md-button class="md-raised md-primary" ng-click="vm.saveTemplate()"
+                           ng-if="vm.showSaveButton">Save</md-button>
+
+                <md-button class="md-raised" ng-click="vm.close()">Cancel</md-button>
+            </div>
+        </div>
+    </div>
+</md-dialog>

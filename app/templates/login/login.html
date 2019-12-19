@@ -1,0 +1,52 @@
+<div class="enter-form">
+
+    <md-content>
+        <div layout="row" layout-align="center center" class="login-form">
+
+            <div class="md-whiteframe-8dp main-div" flex="40" flex-xs="90" flex-sm="60">
+
+                <div class="top-logo" layout="" layout-align="center">
+                    <img src="content/img/knight_hayes_logo.fw.png" alt="Logo">
+                </div>
+                <div class="div-input">
+                    <form novalidate name="vm.loginForm" ng-submit="vm.login()">
+                        <md-input-container>
+                            <label>Email</label>
+                            <input ng-model="vm.data.email" type="email" name="email" required maxlength="32"
+                                   ng-pattern="/^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/">
+                            <div ng-messages="vm.loginForm.email.$error" >
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="pattern">Must look like an e-mail address.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Password</label>
+                            <input ng-model="vm.data.password" type="password" name="password"
+                                   maxlength="32"
+                                   minlength="6"
+                                   required>
+                            <div ng-messages="vm.loginForm.password.$error">
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="maxlength">Password max length 32.</div>
+                                <div ng-message="minlength">Password min length 6.</div>
+                            </div>
+                        </md-input-container>
+                        <div class="div-btn" >
+                            <md-button type="submit">
+                                Log in
+                            </md-button>
+                        </div>
+                    </form>
+                </div>
+
+                <div layout="" layout-align="center" class="bot-text">
+                    <p ui-sref="forgot">Forgotten password?</p>
+                </div>
+
+            </div>
+        </div>
+    </md-content>
+
+</div>
+

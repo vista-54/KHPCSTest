@@ -1,0 +1,98 @@
+<md-content class="tabs">
+
+    <div class="logo-tabs" layout="row" layout-align="center center">
+        <img src="content/img/knight_hayes_logo.fw.png" alt="Logo">
+    </div>
+    <div class="nav-menu">
+        <div class="burg">
+            <i class="material-icons" ng-click="vm.toggleOpenNav()" ng-hide="vm.isOpenRight()">menu</i>
+            <md-sidenav class="md-sidenav-left  side-menu" md-component-id="nav">
+
+                <md-toolbar class="md-theme-light" layout="row">
+                    <h1 class="md-toolbar-tools">Menu
+                    </h1>
+                    <md-button class="md-icon-button exit-menu" ng-click="vm.closeNavButton()">
+                        <i class="material-icons">highlight_off</i>
+                    </md-button>
+                </md-toolbar>
+                <md-content>
+                    <md-list flex>
+                        <md-list-item ui-sref="tab.user-management" ng-click="vm.closeNavButton()"
+                                      ng-if="vm.user.role_id !== 3">
+                            <p>User Management</p>
+                        </md-list-item>
+                        <md-list-item ui-sref="tab.company-management" ng-click="vm.closeNavButton()"
+                                      ng-if="vm.user.role_id !== 1">
+                            <p>Company Management</p>
+                        </md-list-item>
+                        <md-list-item ui-sref="tab.survey-management" ng-if="vm.user.role_id == 2"
+                                      ng-click="vm.closeNavButton()">
+                            <p>Survey Management</p>
+                        </md-list-item>
+                        <md-list-item ui-sref="tab.contract-editor" ng-if="vm.user.role_id == 2"
+                                      ng-click="vm.closeNavButton()">
+                            <p> Contract Editor</p>
+                        </md-list-item>
+                        <!--<md-list-item ui-sref="tab.settings" ng-click="vm.closeNavButton()">-->
+                            <!--<p>Settings</p>-->
+                        <!--</md-list-item>-->
+                        <md-list-item ui-sref="tab.profile" ng-click="vm.closeNavButton()">
+                            <p>Profile</p>
+                        </md-list-item>
+                        <md-list-item ng-click="vm.logout()">
+                            <p>Logout</p>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+
+            </md-sidenav>
+        </div>
+        <md-nav-bar
+                aria-label="navigation"
+                layout="row"
+                layout-align="center center"
+                class="nav"
+                flex="100"
+                md-selected-nav-item="vm.currentNavItem">
+
+            <md-nav-item md-nav-sref="tab.user-management" name="page1" ng-if="vm.user.role_id !== 3">
+                <p>User Management</p>
+            </md-nav-item>
+            <md-nav-item md-nav-sref="tab.company-management" name="page2" ng-if="vm.user.role_id !== 1">
+                <p>Company Management</p>
+            </md-nav-item>
+            <md-nav-item md-nav-sref="tab.survey-management" name="page3" ng-if="vm.user.role_id == 2">
+                <p>Survey Management</p>
+            </md-nav-item>
+            <md-nav-item md-nav-sref="tab.contract-editor" name="page4" ng-if="vm.user.role_id == 2">
+                <p> Contract Editor</p>
+            </md-nav-item>
+            <!--<md-nav-item md-nav-sref="tab.settings" name="page5">-->
+                <!--<p>Settings</p>-->
+            <!--</md-nav-item>-->
+
+            <md-menu md-offset="0 -7" layout="row" layout-align="end center">
+
+                <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                    <i class="material-icons" style="color: whitesmoke">arrow_drop_down_circle</i>
+                </md-button>
+
+                <md-menu-content width="4">
+
+                    <md-menu-item >
+                        <md-button ui-sref="tab.profile" ng-click="vm.closeNavButton()" class="log-btn">
+                            <i class="material-icons">account_circle</i>Profile</md-button>
+                    </md-menu-item>
+
+                    <md-menu-item>
+                        <md-button ng-click="vm.logout()" class="log-btn">
+                            <i class="material-icons">exit_to_app</i>Logout</md-button>
+                    </md-menu-item>
+
+                </md-menu-content>
+            </md-menu>
+
+        </md-nav-bar>
+    </div>
+    <div ui-view></div>
+</md-content>

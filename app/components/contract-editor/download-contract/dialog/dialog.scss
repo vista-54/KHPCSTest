@@ -1,0 +1,28 @@
+.download-contract {
+  width: 300px;
+
+  md-input-container {
+    margin: 18px 15px;
+  }
+
+  .download-btn-left {
+    margin: 0 30px 20px 20px;
+  }
+  .download-btn-right {
+    margin: 0px 10px 20px 0;
+  }
+
+  .download-button:hover {
+    background: #3f51b5;
+    border: 2px solid #3f51b5;
+    color: #fff;
+  }
+
+  @media (max-width: 400px) {
+    .download-btn-left {
+      margin: 0 -28px 20px 20px;
+    }
+  }
+
+
+}

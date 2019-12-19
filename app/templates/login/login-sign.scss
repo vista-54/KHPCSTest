@@ -1,0 +1,64 @@
+.enter-form {
+
+  .top-logo img {
+    height: 50px;
+  }
+
+  .login-form {
+    height: 100vh;
+  }
+
+  .main-div {
+    padding: 20px 40px;
+  }
+
+  md-input-container {
+    margin: 10px 0 0 0;
+    width: 100%;
+  }
+
+  .div-input {
+    padding-top: 20px;
+  }
+
+  .log-bot {
+    padding: 20px 0 0 0;
+  }
+
+  .log-bot-sec p , .bot-text p{
+    cursor: pointer;
+    padding-top: 20px;
+  }
+
+  .log-bot p:first-child {
+    color: gray;
+  }
+
+  .log-bot p:last-child {
+    color: #001041;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .div-btn button {
+    width: 100%;
+    background: #001041;
+    margin: 0;
+    color: white;
+    text-transform: capitalize;
+  }
+
+  .div-btn .md-button:hover {
+    background: #001041;
+  }
+
+  .logBtnText {
+    color: #fff;
+    text-transform: none;
+  }
+
+  .conf-pass{
+    font-size: 13px;
+  }
+
+}

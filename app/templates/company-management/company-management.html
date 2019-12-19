@@ -1,0 +1,32 @@
+<div class="company-admin" layout="row" layout-align="center">
+    <div class="tab-list">
+        <div ng-repeat="company in vm.company"
+             class="questionnaire-list"
+             md-whiteframe="{{height}}"
+             ng-click="vm.setActiveCompany(company.id, $index , company.name)"
+             ui-sref="tab.company">
+            <md-menu>
+                <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
+                    <i class="material-icons">more_vert</i>
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click=" vm.createCompany(company.id , company)">Edit</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="vm.deleteCompany(company.id , company)">Delete</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <div class="text-quest">
+                <p class="hidden-text">{{company.name}}</p>
+            </div>
+        </div>
+        <div ng-click=" vm.createCompany()" class="questionnaire-list"
+             md-whiteframe="{{height}}"
+             layout="column" layout-align="center center">
+            <p class="plus-ico"><i class="material-icons">control_point</i></p>
+            <p>New Company</p>
+        </div>
+    </div>
+</div>

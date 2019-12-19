@@ -1,0 +1,58 @@
+.company {
+  .add-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #c6c6c6;
+    cursor: pointer;
+  }
+
+  md-pagination-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content:center;
+  }
+
+  md-tab-item {
+    width: 33%;
+  }
+
+  .search-customers{
+    margin-bottom: 0;
+  }
+
+  md-ink-bar{
+    background: #001041 !important;
+  }
+
+  .back-btn{
+    width: fit-content;
+  }
+
+  .table-head {
+    color: rgba(0,0,0,.54) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+  .add-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #c6c6c6;
+    cursor: pointer;
+    margin-right:10px;
+  }
+
+  .check-tmp {
+    margin: 0;
+  }
+
+  .risk-section{
+    min-height: 50vh;
+  }
+
+  .tmp-section{
+    padding-left: 10px;
+  }
+}
+

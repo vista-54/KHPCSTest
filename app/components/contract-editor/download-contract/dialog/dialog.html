@@ -1,0 +1,39 @@
+<md-dialog class="download-contract">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row" layout-align="center center">
+            <h2>Download contract</h2>
+        </div>
+    </md-toolbar>
+
+    <md-input-container class="md-block" ng-if="vm.showSurveys">
+        <label>Select a survey</label>
+        <md-select class="md-block-restyle" ng-model="vm.test">
+            <md-option ng-repeat="survey in vm.surveys" value="{{survey.name}}"
+                       ng-click="vm.actualSurvey(survey)">
+                {{survey.name}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container class="md-block" ng-if="vm.showTemplates && !vm.emptyTemplate">
+        <label>Select a template</label>
+        <md-select ng-model="user.template">
+            <md-option ng-repeat="template in vm.templates" value="{{template.name}}"
+                       ng-click="vm.actualTemplate(template)">
+                {{template.name}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container class="md-block" ng-if="vm.emptyTemplate">
+        <p>No templates for printing</p>
+    </md-input-container>
+
+    <md-dialog-actions class="bot-btn">
+        <md-button  class="md-raised md-primary download-btn-left"
+                    ng-click="vm.finish()"  ng-if="vm.showOK  && !vm.emptyTemplate">Download</md-button>
+        <md-button  class="md-raised download-btn-right" ng-click="vm.cancel()">Close</md-button>
+    </md-dialog-actions>
+
+</md-dialog>

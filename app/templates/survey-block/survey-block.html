@@ -1,0 +1,49 @@
+<section class="side-nav" layout="row" flex="" style="min-height: -webkit-fill-available">
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+
+        <md-content class="surveyBlock">
+            <div class="side-nav-heder" layout="row" layout-align="center center">
+                <h4>Sections</h4>
+            </div>
+
+            <div class="add-section pointer" ng-click="vm.addBlock()" layout="row" layout-align="center center">
+                <p class="block-item" flex="90">+ Add section</p>
+            </div>
+
+
+            <div ui-sortable="vm.sortableOptionsBlock" ng-model="vm.items" class="block-container">
+                <div ng-repeat="(key, item) in vm.items" ng-click="vm.setActiveBlock(item.id, key)" layout="row"
+                     layout-align="center center" class="not-active-item"
+                     ng-class="{'active-item': vm.activeBlock == key}">
+                    <div flex="90" class="block-item pointer" layout="row" layout-align="space-between center">
+                        <div>
+                            {{item.name}}
+                        </div>
+                        <div class="icons hidden-icon"  layout="row">
+                            <div>
+                                <md-tooltip md-direction="left">Edit section</md-tooltip>
+                                <md-icon ng-click="vm.addBlock(item, $index)" md-svg-src="content/icons/icon_edit.svg"
+                                         aria-label="android "></md-icon>
+                            </div>
+                            <div>
+                                <md-tooltip md-direction="left">Delete section</md-tooltip>
+                                <md-icon ng-click="vm.deleteBlock(item.id, $index)"
+                                         md-svg-src="content/icons/icon_delete.svg" aria-label="android "></md-icon>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </md-content>
+
+
+    </md-sidenav>
+
+
+    <md-content ui-view flex></md-content>
+
+</section>

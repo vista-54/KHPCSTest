@@ -1,0 +1,202 @@
+<!--<md-content layout-padding class="passing-question" ng-init="vm.load()">-->
+<md-content layout-padding class="passing-question">
+    <div layout="row" layout-align="center center">
+        <h2>{{vm.activeSurveyName}}</h2>
+    </div>
+
+    <div layout="row" layout-align="center center">
+        <h2>{{vm.header}}</h2>
+    </div>
+
+    <div layout="column" ng-if="vm.emptySurvey === true">
+        <h3>
+            The survey is empty. Please contact to your administrator.
+        </h3>
+
+        <div class="buttons-bar" flex="80" flex-xs="100" layout="row" layout-align="end center">
+            <md-button class="md-raised backButton" ng-click="vm.toUserManagement()">OK</md-button>
+        </div>
+    </div>
+    <form name="vm.questionForm" ng-submit="vm.next()" novalidate ng-if="vm.emptySurvey !== true">
+        <div ng-repeat="(mainKey, questions) in vm.questions">
+            <div layout="row" layout-align="center center">
+
+                <div ng-if="questions.type == 1 || questions.type == 0 || questions.type == 3" flex="80" flex-xs="100">
+                    <div>
+
+                        <div layout="row">
+                            <h3 layout="row">{{questions.title}}<p ng-if="questions.mandatory" class="required-quest">
+                                *</p></h3>
+                        </div>
+
+                        <div ng-if="questions.type == 3">
+                            <md-input-container>
+                                <label>Enter date</label>
+                                <md-datepicker ng-model="vm.data[mainKey].mainData"
+                                               ng-required="{{questions.mandatory}}"
+                                ></md-datepicker>
+                            </md-input-container>
+                            <md-card>
+                                <md-content class="quest-info">
+                                    <p>{{questions.information}}</p>
+                                </md-content>
+                            </md-card>
+                        </div>
+
+                        <div ng-if="questions.type == 0">
+                            <div>
+
+                                <div ng-repeat="answers in questions.answers">
+
+                                    <md-checkbox ng-checked="vm.exists(answers.id, vm.data[mainKey].mainData)"
+                                                 class="md-primary"
+                                                 ng-click="vm.toggle(answers.id, vm.data[mainKey].mainData)"
+                                                 ng-model="checkBox"
+                                    >
+                                        {{answers.answer_text}}
+                                    </md-checkbox>
+
+                                </div>
+                                <md-card>
+                                    <md-content class="quest-info">
+                                        <p>{{questions.information}}</p>
+                                    </md-content>
+                                </md-card>
+
+                            </div>
+                        </div>
+
+                        <div ng-if="questions.type == 1">
+                            <md-radio-group ng-model="vm.data[mainKey].mainData"
+                                            ng-required="{{questions.mandatory}}">
+                                <md-radio-button ng-repeat="answers in questions.answers" value="{{answers.id}}"
+                                                 class="md-primary pointer"
+                                                 layout="column"
+                                                 ng-click="vm.checkRadioTreeExample(answers, questions.identifier, mainKey, true)"
+                                >
+                                   <div layout="row">
+                                       {{answers.answer_text}}
+                                       {{answers.information}}
+                                   </div>
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div ng-if="questions.type == 2" flex="80" flex-xs="100">
+                    <div>
+                        <h3 layout="row">{{questions.title }} <p ng-if="questions.mandatory" class="required-quest">
+                            *</p></h3>
+                        <md-input-container class="question-text">
+                            <div ng-if="questions.validation_type == 1">
+                                <div>
+                                    <label>{{questions.title}}</label>
+                                    <input ng-model="vm.data[mainKey].mainData"
+                                           md-maxlength="{{questions.characters_limit}}"
+                                           name="inputType1" type="text" pattern="[a-zA-Z, ' ' .]+"
+
+                                           maxlength="{{questions.characters_limit}}"
+                                           ng-required="{{questions.mandatory}}">
+                                </div>
+                                <div ng-messages="vm.questionForm.inputType1.$error"
+                                     ng-if="questions.validation_type == 1">
+                                    <div ng-message="pattern">Only text.</div>
+                                    <div ng-message="md-maxlength">Max length {{questions.characters_limit}}.</div>
+                                </div>
+                                <md-card>
+                                    <md-content class="quest-info">
+                                        <p>{{questions.information}}</p>
+                                    </md-content>
+                                </md-card>
+
+                            </div>
+                            <div ng-if="questions.validation_type == 2" layout="column">
+                                <input ng-model="vm.data[mainKey].mainData"
+                                       md-maxlength="{{questions.characters_limit}}"
+                                       name="inputType2" pattern="[0-9]+"
+                                       maxlength="{{questions.characters_limit}}"
+                                       ng-required="{{questions.mandatory}}">
+
+                                <div ng-messages="vm.questionForm.inputType2.$error"
+                                     ng-if="questions.validation_type == 2">
+                                    <div ng-message="pattern">Only numbers.</div>
+                                    <div ng-message="md-maxlength">Max length {{questions.characters_limit}}.</div>
+                                </div>
+                                <md-card>
+                                    <md-content class="quest-info">
+                                        <p>{{questions.information}}</p>
+                                    </md-content>
+                                </md-card>
+                            </div>
+                            <div ng-if="questions.validation_type == 0" layout="column">
+                                <input ng-model="vm.data[mainKey].mainData"
+                                       md-maxlength="{{questions.characters_limit}}"
+                                       name="inputType0"
+                                       maxlength="{{questions.characters_limit}}"
+                                       ng-required="{{questions.mandatory}}">
+
+                                <div ng-messages="vm.questionForm.inputType0.$error"
+                                     ng-if="questions.validation_type == 0">
+                                    <div ng-message="md-maxlength">Max length {{questions.characters_limit}}.</div>
+                                </div>
+                                <md-card>
+                                    <md-content class="quest-info">
+                                        <p>{{questions.information}}</p>
+                                    </md-content>
+                                </md-card>
+                            </div>
+
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div ng-if="questions.type == 4" flex="80" flex-xs="100">
+
+                    <h3 layout="row">
+                        {{questions.title}}
+                        <p ng-if="questions.mandatory" class="required-quest">*</p>
+                    </h3>
+
+                    <md-autocomplete
+                            ng-disabled="vm.isDisabled"
+                            md-no-cache="vm.noCache"
+                            md-selected-item="vm.data[mainKey].mainData"
+                            md-search-text-change="vm.searchTextChange(item)"
+                            md-search-text="item"
+                            md-selected-item-change="vm.selectedCountryChange(item, questions, mainKey)"
+                            md-items="item in vm.querySearch(item)"
+                            md-item-text="item"
+                            md-min-length="0"
+                            placeholder="Enter the country"
+                            ng-required="{{questions.mandatory}}">
+                        <md-item-template>
+                            <span>{{item}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No matches found
+                        </md-not-found>
+                    </md-autocomplete>
+                    <md-card>
+                        <md-content class="quest-info">
+                            <p>{{questions.information}}</p>
+                        </md-content>
+                    </md-card>
+
+                </div>
+            </div>
+        </div>
+
+        <div layout="row" layout-align="center center">
+            <div class="buttons-bar" flex="80" flex-xs="100" layout="row" layout-align="end center">
+                <div>
+                    <md-button class="md-raised backButton" ng-click="vm.back()" ng-if="vm.backSucces">Back</md-button>
+                    <md-button class="md-raised md-primary" type="submit"
+                               ng-if="vm.endOfChain">Next
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </form>
+</md-content>

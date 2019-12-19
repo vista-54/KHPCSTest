@@ -1,0 +1,63 @@
+.addQuest {
+
+  .dialog-content {
+    padding: 5px 30px 5px 30px;
+    //height: 600px;
+  }
+
+  .add-answer-button {
+    text-transform: none;
+    margin: 0 0 15px 0;
+    font-size: 15px;
+  }
+
+  .add-answer-button_country {
+    text-transform: none;
+    font-size: 15px;
+  }
+
+  .country_input {
+    width: 90%;
+  }
+
+  .next-quest-radio{
+    margin-bottom: 42px;
+    width: 100%;
+  }
+  .main-input , .radio-input{
+    width: 100%;
+  }
+
+  //.radio-input{
+  //  width: 100%;
+  //}
+
+  #answer-container {
+    height: 220px;
+  }
+  .answer-container {
+    max-height: 220px;
+  }
+
+  md-dialog-actions {
+    padding: 10px 30px 20px 30px;
+    border-top: none !important;
+    button {
+      margin: 0;
+    }
+  }
+  .next-label {
+    display: flex;
+  }
+}
+.pick-next{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.next-quest-id {
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

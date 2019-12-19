@@ -1,0 +1,27 @@
+<md-dialog flex="30" class="create-quest">
+    <md-toolbar ng-if="vm.id === undefined" layout="row" layout-align="center" class="view-head">
+        <p>Create survey</p>
+    </md-toolbar>
+    <md-toolbar ng-if="vm.id !== undefined" layout="row" layout-align="center" class="view-head">
+        <p>Edit survey</p>
+    </md-toolbar>
+    <form name="vm.surveyForm" novalidate ng-submit="vm.saveSurvey()">
+        <div class="content">
+            <md-input-container>
+                <label>Name</label>
+                <input type="text" ng-model="vm.data.name" md-autofocus required maxlength="32" name="name"
+                       minlength="3">
+                <div ng-messages="vm.surveyForm.name.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="minlength">Name min length 3.</div>
+                </div>
+            </md-input-container>
+
+            <div class="bot-btn" layout="" layout-align="space-between">
+                <md-button class="md-raised md-primary" type="submit">Save
+                </md-button>
+                <md-button class="md-raised" ng-click="vm.cancel()">Close</md-button>
+            </div>
+        </div>
+    </form>
+</md-dialog>

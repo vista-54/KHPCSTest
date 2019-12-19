@@ -1,0 +1,36 @@
+<md-dialog flex="40" flex-xs="90" flex-sm="60" class="add-client">
+    <div>
+        <md-toolbar layout="row" layout-align="center" class="view-head">
+            <p ng-if="vm.id === undefined">Add a new risk</p>
+            <p ng-if="vm.id !== undefined">Edit a risk</p>
+        </md-toolbar>
+
+        <div class="content-add">
+            <form name="vm.riskForm" ng-submit="vm.save()" novalidate>
+                <div  layout="column">
+                    <md-input-container>
+                        <label>Range</label>
+                        <input type="text" name="range" ng-model="vm.data.riskRange" required maxlength="32" minlength="2">
+                        <div ng-messages="vm.riskForm.range.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Max length 32.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Description</label>
+                        <input type="text" name="description" ng-model="vm.data.description" maxlength="32" minlength="2">
+                        <div ng-messages="vm.riskForm.description.$error">
+                            <div ng-message="maxlength">Max length 32.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="bot-btn" layout="row" layout-align="space-between">
+                    <md-button class="md-raised md-primary" type="submit">Save
+                    </md-button>
+                    <md-button class="md-raised" ng-click="vm.cancel()">Close</md-button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</md-dialog>

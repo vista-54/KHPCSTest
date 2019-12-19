@@ -1,0 +1,94 @@
+<div class="profile" layout="" layout-align="center">
+    <md-button layout="row" layout-align="center center" ng-click="vm.goBack()" class="back-btn">
+        <i class="material-icons">arrow_back</i>
+        Back
+    </md-button>
+    <div class="main-div" flex="40" flex-xs="100" flex-sm="60">
+        <div layout="row" layout-align="center center">
+            Edit Profile
+        </div>
+
+        <div class="div-input">
+            <form name="vm.profile">
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>Role</label>
+                    <input ng-model="vm.role" disabled>
+                </md-input-container>
+                <md-input-container>
+                    <label>Full name</label>
+                    <input ng-model="vm.dataInfo.name" type="text" name="name" required maxlength="32">
+                    <div ng-messages="vm.profile.name.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="maxlength">Name max length 32.</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>Email</label>
+                    <input ng-model="vm.dataInfo.email" type="email" name="email" required maxlength="32"
+                           ng-pattern="/^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/"
+                    >
+                    <div ng-messages="vm.profile.email.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="maxlength">Email max length 32.</div>
+                        <div ng-message="pattern">Invalid email.</div>
+                    </div>
+                </md-input-container>
+
+                <p class="change-pass" ng-click="vm.menu.change(1)">
+                    Change Password?
+                </p>
+            </form>
+            <form novalidate name="vm.profilePass" ng-submit="vm.updateProfileInfo()">
+                <div class="menu" flex="100" ng-style="vm.menu.isShow(1) ? {height: '230px'}: {}"
+                     layout="column" layout-align="start stretch">
+
+                    <md-input-container>
+                        <label>Current Password</label>
+                        <input ng-model="vm.data.current_password" type="password" name="current_password" required
+                               minLength="6"
+                               maxlength="32">
+                        <div ng-messages="vm.profilePass.current_password.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Password max length 32.</div>
+                            <div ng-message="minlength">Password min length 6.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input ng-model="vm.data.password" type="password" name="password" required
+                               minLength="6"
+                               maxlength="32">
+                        <div ng-messages="vm.profilePass.password.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Password max length 32.</div>
+                            <div ng-message="minlength">Password min length 6.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Confirm password</label>
+                        <input ng-model="vm.data.password_confirmation" type="password" name="passCon"
+                               required
+                               minLength="6"
+                               maxlength="32"
+                        >
+                        <div ng-messages="vm.profilePass.passCon.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Password max length 32.</div>
+                            <div ng-message="minlength">Password min length 6.</div>
+                            <div class="conf-pass" ng-show="vm.data.password !== vm.data.password_confirmation">
+                                The password confirmation does not match.
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div class="div-btn">
+                    <md-button type="submit">
+                        Update info
+                    </md-button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

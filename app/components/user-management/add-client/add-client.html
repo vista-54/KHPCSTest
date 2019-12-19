@@ -1,0 +1,122 @@
+<md-dialog flex="40" flex-xs="90"  flex-sm="70"   class="add-client">
+
+
+        <md-toolbar ng-if="vm.id == undefined" layout="row" layout-align="center" class="view-head">
+            <p>Add a new client</p>
+        </md-toolbar>
+        <md-toolbar ng-if="vm.id !== undefined" layout="row" layout-align="center" class="view-head">
+            <p>Editing client</p>
+        </md-toolbar>
+
+
+            <form name="vm.customersForm" ng-submit="vm.save()" novalidate>
+
+                <md-dialog-content class="all-input" layout="column">
+                    <md-input-container>
+                        <label>Client name</label>
+                        <input type="text" name="name" ng-model="vm.data.name" required maxlength="32">
+                        <div ng-messages="vm.customersForm.name.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Email max length 32.</div>
+
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Client surname</label>
+                        <input type="text" name="secondName" ng-model="vm.data.surname" required maxlength="32">
+                        <div ng-messages="vm.customersForm.secondName.$error">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxlength">Email max length 32.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Client Classification</label>
+                        <md-select ng-model="vm.data.classification" name="select" required="">
+                            <md-option value="retail">Retail</md-option>
+                            <md-option value="professional">Professional</md-option>
+                            <md-option value="eligible">Eligible</md-option>
+                        </md-select>
+                        <div ng-messages="vm.customersForm.select.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="company-input" ng-if="vm.user.role_id == 2">
+                        <label>Choose a company</label>
+                        <md-select ng-model="vm.data.company_id" name="company" ng-required="{{!vm.user.update}}" ng-disabled="{{vm.user.update}}">
+                            <md-option ng-repeat="company in vm.companies" value="{{company.id}}" ng-click="vm.loadSurvey(company.id)">
+                                {{company.name}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="vm.customersForm.company.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-checkbox ng-model="vm.goThrough" aria-label="Checkbox 1" ng-if="vm.id === undefined && vm.data.company_id !== undefined || vm.user.role_id === 1"
+                                 class="box md-primary" ng-click="vm.loadSurvey()">
+                        Go through the survey
+                    </md-checkbox>
+
+                    <div ng-if="vm.id === undefined && vm.goThrough " class="repeat-list">
+                        <div ng-repeat="survey in vm.surveys"  layout="row" layout-align="space-between end"
+                         class="single-survey">
+                            <div layout="row" class="hidden-box">
+                                <md-checkbox aria-label="Checkbox 1"
+                                             class="md-primary box-survey"
+                                             ng-model="vm.survModel[survey.id]"
+                                             ng-change="vm.chooseSurveys(survey.id)">
+                                </md-checkbox>
+                                <p class="hidden-box hidden-box1">{{survey.name}}</p>
+                            </div>
+
+
+                            <!--<div class="no-templates" ng-if="vm.noneTmp(survey.survey_id) && vm.survModel[survey.survey_id]">-->
+                                <!--<p class="no-templates-top">No templates</p>-->
+                                <!--<p class="no-templates-bottom">Only take a survey</p>-->
+                            <!--</div>-->
+
+                            <!--<md-input-container class="md-block select-template"-->
+                                                <!--ng-if="!vm.noneTmp(survey.survey_id) && vm.survModel[survey.survey_id]"-->
+                                                <!--ng-click="showeList = true">-->
+                                <!--<label>Select a template</label>-->
+                                <!--<md-select ng-model="vm.templateModel[survey.survey_id]">-->
+                                    <!--<md-option ng-repeat="template in vm.templates" value="{{template.title}}"-->
+                                               <!--ng-if="showeList && survey.survey_id === template.survey_id"-->
+                                               <!--ng-click="vm.chooseTemplates(survey.survey_id,-->
+                                               <!--survey.survey_name, template.id, template.title)">-->
+                                        <!--<span>-->
+                                        <!--{{template.title}}-->
+                                        <!--</span>-->
+                                    <!--</md-option>-->
+                                <!--</md-select>-->
+                            <!--</md-input-container>-->
+                        </div>
+
+                        <div class="repeat-list no-surveys"  ng-if="!vm.surveys.length && vm.data.company_id">
+                            <p class="no-templates-bottom">No surveys for this company</p>
+                        </div>
+
+                    </div>
+                </md-dialog-content>
+
+
+                <md-dialog-actions class="bot-btn client-btn" layout="row" layout-align="space-between">
+                    <!--<md-button class="md-raised md-primary" type="submit" ng-if="vm.goThrough">Start test-->
+                    <!--</md-button>-->
+                    <md-button class="md-raised md-primary" type="submit"
+                               ng-if="vm.id === undefined ">Create
+                    </md-button>
+                    <md-button class="md-raised md-primary" type="submit" ng-if="vm.id !== undefined">Save
+                    </md-button>
+                    <md-button class="md-raised" ng-click="vm.cancel()">Close</md-button>
+                </md-dialog-actions>
+            </form>
+
+
+
+
+</md-dialog>
+
+
+

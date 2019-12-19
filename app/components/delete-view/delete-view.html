@@ -1,0 +1,19 @@
+<md-dialog flex="30" flex-xs="70" class="dlt-main">
+    <div class="dlt-window">
+        <md-toolbar layout="row" layout-align="center" class="view-head">
+            <p>Confirm</p>
+        </md-toolbar>
+        <div class="dlt-mid">
+            <p>Delete item?</p>
+        </div>
+
+        <md-dialog-actions class="bot-btn" layout-align="space-between">
+            <md-button class="md-raised md-primary" ng-click="vm.confirm()">
+                Yes
+            </md-button>
+            <md-button class="md-raised" ng-click="vm.cancel()">
+                No
+            </md-button>
+        </md-dialog-actions>
+    </div>
+</md-dialog>

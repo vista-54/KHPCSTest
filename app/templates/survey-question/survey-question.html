@@ -1,0 +1,390 @@
+<md-content class="quest" md-theme="blue-grey">
+
+    <md-tabs md-dynamic-height md-border-bottom md-selected="selectedIndex">
+        <md-tab label="Questions"></md-tab>
+        <md-tab label="Preview" ng-click="vm.startupChainBuild()"></md-tab>
+    </md-tabs>
+
+    <section ng-if="selectedIndex === 0">
+        <md-content class="md-padding">
+            <div class="question-heder" layout="row">
+                <div flex="10" layout="row" layout-align="center center">
+                    <div ng-click="vm.toggleLeft()" layout="row" layout-align="center center" hide-gt-md="">
+                        <md-tooltip md-direction="right">Choose a section</md-tooltip>
+                        <i class="material-icons">menu</i>
+                    </div>
+                </div>
+                <md-button
+                        class=" add-quest-bot md-fab md-fab-bottom-right  md-primary"
+                        ng-click="vm.showEdit()" layout="row" layout-align="center center"
+                >
+                    <md-tooltip md-direction="left">Add question</md-tooltip>
+                    <i class="material-icons">add</i>
+                </md-button>
+
+
+                <div flex="80" layout="row" layout-align="space-between center">
+                    <div class="name-block">
+                        <h3>{{vm.nameBlock}}</h3>
+                    </div>
+                    <div>
+                        <div ng-show="vm.edit">
+                            <md-button class="edit-button" ng-click="vm.editButton()">
+                                Edit section
+                            </md-button>
+                        </div>
+                        <div ng-show="!vm.edit" layout="row" layout-align="center center">
+
+                            <div>
+                                <md-button ng-click="vm.showEdit()">
+                                    Add question
+                                </md-button>
+                            </div>
+
+                            <md-button class="edit-button" ng-class="{'edit-button-active': !vm.drag}"
+                                       ng-click="vm.editButton()">
+                                Drag and drop mode
+                            </md-button>
+
+                            <!--<div>-->
+                            <!--<md-button class="cancel-button" ng-click="vm.cancel()">-->
+                            <!--Cancel-->
+                            <!--</md-button>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<md-button class="save-button md-primary" ng-click="vm.save()">-->
+                            <!--Save-->
+                            <!--</md-button>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div layout="row" layout-align="center center">
+                <div flex="80">
+
+                    <div ui-sortable="vm.sortableOptionsQuestion" ng-model="vm.items" class="question-container">
+                        <div ng-repeat="(mainKey, question) in  vm.items" class="question_block"
+                             ng-if="!question.delete"
+                             layout="row">
+                            <div class="couter">
+                                Question {{mainKey + 1}}
+                            </div>
+                            <div flex="">
+                                <div class="main_question" layout="row" layout-align="space-between center">
+
+                                    <div class="main_content">
+                                        {{question.title}}
+                                    </div>
+
+                                    <div layout="row">
+                                        <div layout="row" layout-align="none center">
+                                            {{question.identifier}}
+                                        </div>
+                                        <div class="icons" ng-show="!vm.edit" layout="row" layout-align="none center">
+                                            <md-input-container class="risk-input"
+                                                                ng-if="question.type !== 1"
+                                                                aria-label="abc">
+                                                <md-tooltip md-direction="left">Risk range</md-tooltip>
+                                                <input ng-model="question.contract_text"  aria-label="abc"
+                                                       ng-change="vm.checkKey(question)"
+                                                       ng-model-options="{debounce: 2000}"
+                                                       pattern="[1-9]+">
+                                            </md-input-container>
+                                            <div>
+                                                <md-tooltip md-direction="left">Duplicate a question</md-tooltip>
+                                                <i class="material-icons" ng-click="vm.copyQuest(question )">content_copy</i>
+                                            </div>
+
+
+                                            <div>
+                                                <md-tooltip md-direction="left">Set a mandatory</md-tooltip>
+                                                <md-checkbox class="md-primary"
+                                                             ng-model="question.mandatory"
+                                                             ng-click="vm.mandatoryCheck(question)"
+                                                             ng-checked="vm.mandatoryChecked(question)"
+                                                             ng-if="question.type !== 1" aria-label="1">
+                                                </md-checkbox>
+                                            </div>
+
+                                            <div>
+                                                <md-tooltip md-direction="left">Edit question</md-tooltip>
+                                                <md-icon ng-click="vm.showEdit(mainKey)"
+                                                         md-svg-src="content/icons/icon_edit.svg"
+                                                         aria-label="android "></md-icon>
+                                            </div>
+                                            <div>
+                                                <md-tooltip md-direction="left">Delete question</md-tooltip>
+                                                <md-icon ng-click="vm.deleteQuest(question.id, mainKey)"
+                                                         md-svg-src="content/icons/icon_delete.svg"
+                                                         aria-label="android "></md-icon>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <md-input-container ng-if="question.type !== 1 " class="next-input">
+                                        <label>Next question: {{question.next_question}}
+                                            <p ng-if="question.next_question === null">undefined</p>
+                                        </label>
+
+                                        <md-select class="md-block-restyle" ng-model="under"
+                                                   aria-label="">
+                                            <md-option ng-value="null" ng-click="vm.changeNextQuest(question)">
+                                                undefined
+                                            </md-option>
+                                            <md-option ng-repeat="quest in  vm.items"
+                                                       ng-click="vm.changeNextQuest(question, quest)"
+                                                       ng-value="quest.identifier"
+                                                       ng-if="quest.id !== question.id"
+                                            >
+                                                <div layout="row">
+                                                    <div class="next-quest-id"> {{quest.identifier}}</div>
+                                                    <div flex="" class="pick-next"> {{quest.title}}</div>
+                                                </div>
+                                            </md-option>
+
+                                        </md-select>
+                                    </md-input-container>
+                                    <div ui-sortable="vm.sortableOptionAnswer" ng-model="question.answers"
+                                         class="answer-container" ng-if="question.type == 1 || question.type == 0">
+                                        <div ng-repeat="(answerKey, answers) in  question.answers" class="answer-block"
+                                             ng-if="!answers.delete">
+
+                                            <div layout="row" flex="" layout-align="space-between center"
+                                                 class="answeText">
+
+                                                <div layout="row" layout-align="center center   ">
+                                                    <i class="material-icons" ng-if="question.type == 0">check</i>
+                                                    <i class="material-icons md-36" ng-if="question.type == 1">radio_button_unchecked</i>
+
+                                                    {{answers.answer_text}}
+                                                </div>
+                                                <div layout="row">
+                                                    <md-input-container class="risk-input"
+                                                                        ng-if="question.type == 1"
+                                                                        aria-label="abc">
+                                                        <md-tooltip md-direction="left">Risk range</md-tooltip>
+                                                        <input ng-model="answers.contract_text"  aria-label="abc"
+                                                               ng-change="vm.checkKey(question)"
+                                                               ng-model-options="{debounce: 2000}">
+                                                    </md-input-container>
+
+                                                    <div>
+                                                        <i class="material-icons"
+                                                           ng-click="vm.copyQuest(question , answers)">
+                                                            <md-tooltip md-direction="left">Duplicate a answer</md-tooltip>content_copy</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <md-input-container ng-if="question.type === 1" class="next-input">
+                                                <label>Next question: {{answers.next_question}}
+                                                    <p ng-if="answers.next_question === null">undefined</p>
+                                                </label>
+                                                <md-select class="md-block-restyle" ng-model="under"
+                                                           aria-label="Financial advisor">
+                                                    <md-option ng-value="null"
+                                                               ng-click="vm.changeNextQuest(question , quest , answers)">
+                                                        undefined
+                                                    </md-option>
+
+                                                    <md-option ng-repeat="quest in  vm.items"
+                                                               ng-click="vm.changeNextQuest(question, quest , answers)"
+                                                               ng-value="quest.identifier"
+                                                               ng-if="question.id !== quest.id">
+                                                        <div layout="row">
+                                                            <div class="next-quest-id"> {{quest.identifier}}</div>
+                                                            <div flex="" class="pick-next"> {{quest.title}}</div>
+                                                        </div>
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <!--<div layout="row" layout-align="end center" ng-if="question.type == 1">-->
+                                            <!--<div ui-sortable="vm.sortableOptionsQuestionInAnswer"-->
+                                            <!--ng-model="answers.child_questions" class="question-container"-->
+                                            <!--ng-class="{'question-container-drop': vm.childDraging}" flex="90">-->
+                                            <!--<div ng-repeat="(questionKey, child_questions) in answers.child_questions"-->
+                                            <!--ng-if="!child_questions.delete">-->
+                                            <!--<div class="child_question"-->
+                                            <!--ng-class="{'child_question_last': $last && child_questions.type == 2}"-->
+                                            <!--layout="row" layout-align="space-between center">-->
+
+                                            <!--<div>-->
+                                            <!--{{child_questions.title}}-->
+                                            <!--</div>-->
+
+                                            <!--<div layout="row">-->
+                                            <!--<div>-->
+                                            <!--{{child_questions.identifier}}-->
+                                            <!--</div>-->
+
+                                            <!--<div class="icons" ng-show="!vm.edit" layout="row">-->
+                                            <!--<md-icon-->
+                                            <!--ng-click="vm.showEdit(mainKey, answerKey, questionKey)"-->
+                                            <!--md-svg-src="content/icons/icon_edit.svg"-->
+                                            <!--aria-label="android "></md-icon>-->
+                                            <!--<md-icon-->
+                                            <!--ng-click="vm.deleteQuest(child_questions.id, mainKey, answerKey, questionKey)"-->
+                                            <!--md-svg-src="content/icons/icon_delete.svg"-->
+                                            <!--aria-label="android "></md-icon>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+
+                                            <!--</div>-->
+                                            <!--<div>-->
+                                            <!--<div ui-sortable="vm.sortableOptionChildAnswer"-->
+                                            <!--ng-model="child_questions.answers"-->
+                                            <!--class="child-answer-container"-->
+                                            <!--ng-if="child_questions.type == 1 || child_questions.type == 0">-->
+                                            <!--<div ng-repeat="childAnswers in  child_questions.answers"-->
+                                            <!--class="answer-block child-answer"-->
+                                            <!--ng-if="!childAnswers.delete">-->
+
+                                            <!--<div layout="row" flex="" class="answeText">-->
+
+                                            <!--<i class="material-icons"-->
+                                            <!--ng-if="child_questions.type == 0">check</i>-->
+                                            <!--<i class="material-icons md-36"-->
+                                            <!--ng-if="child_questions.type == 1">radio_button_unchecked</i>-->
+
+                                            <!--{{childAnswers.answer_text}}-->
+
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </section>
+
+    <section ng-if="selectedIndex === 1">
+
+        <md-content class="md-padding">
+            <div layout="row" layout-align="center center">
+                <div flex="80">
+                    <h2 layout="row" layout-align="center center">Preview</h2>
+
+                    <div ng-repeat="(questIndex, question) in vm.chain">
+
+                        <div ng-if="question.type === 0">
+                            <h3>{{question.title}}
+                                <span ng-if="question.mandatory" class="required-quest">*</span>
+                            </h3>
+
+                            <div ng-repeat="answer in question.answers">
+                                <md-checkbox class="md-primary">
+                                    {{answer.answer_text}}
+                                </md-checkbox>
+                            </div>
+                        </div>
+
+                        <div ng-if="question.type === 1">
+                            <h3>{{question.title}}
+                                <span ng-if="question.mandatory" class="required-quest">*</span>
+                            </h3>
+
+                            <md-radio-group ng-model="vm.exampleAnswers[questIndex].answer">
+                                <div ng-repeat="radio in question.answers">
+                                    <md-radio-button value={{radio.id}} class="md-primary pointer"
+                                                     ng-click="vm.checkRadioTreeExample(radio, question.identifier, questIndex, true)">
+                                        {{radio.answer_text}}
+                                    </md-radio-button>
+                                </div>
+                            </md-radio-group>
+                        </div>
+
+                        <div ng-if="question.type === 2">
+                            <h3>{{question.title}}
+                                <span ng-if="question.mandatory" class="required-quest">*</span>
+                            </h3>
+
+                            <md-input-container class="question-text">
+                                <label>{{question.title}}</label>
+
+                                <input ng-model="exampleDataText[question.id]"
+                                       md-maxlength="{{question.characters_limit}}"
+                                       name="inputType0" ng-if="question.validation_type == 0"
+                                       maxlength="{{question.characters_limit}}"
+                                       ng-required="{{question.mandatory}}"
+                                >
+
+                                <input ng-model="exampleDataText[question.id]"
+                                       md-maxlength="{{question.characters_limit}}"
+                                       name="inputType1" type="text" pattern="[a-zA-Z, ' ']+"
+                                       ng-if="question.validation_type == 1"
+                                       maxlength="{{question.characters_limit}}"
+                                       ng-required="{{question.mandatory}}">
+
+                                <input ng-model="exampleDataText[question.id]"
+                                       md-maxlength="{{question.characters_limit}}"
+                                       name="inputType2" pattern="[0-9]+" ng-if="question.validation_type == 2"
+                                       maxlength="{{question.characters_limit}}"
+                                       ng-required="{{question.mandatory}}">
+                            </md-input-container>
+                        </div>
+
+                        <div ng-if="question.type === 3">
+                            <h3>{{question.title}}
+                                <span ng-if="question.mandatory" class="required-quest">*</span>
+                            </h3>
+
+                            <md-input-container>
+                                <label>Enter date</label>
+                                <md-datepicker
+                                        ng-model=exampleDataDatePicker[question.id]></md-datepicker>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-if="question.type === 4">
+                            <h3>{{question.title}}
+                                <span ng-if="question.mandatory" class="required-quest">*</span>
+                            </h3>
+
+                            <md-autocomplete
+                                    ng-disabled="vm.isDisabled"
+                                    md-no-cache="vm.noCache"
+                                    md-selected-item="exampleDataCountry[questIndex]"
+                                    md-search-text-change=vm.searchTextChange(item)
+                                    md-search-text=item
+                                    md-selected-item-change="vm.selectedCountryChange(item, question, questIndex)"
+                                    md-items="item in vm.querySearch(item)"
+                                    md-item-text="item"
+                                    md-min-length="0"
+                                    placeholder="Enter the country">
+                                <md-item-template>
+                                    <span>{{item}}</span>
+                                </md-item-template>
+                                <md-not-found>
+                                    No matches found
+                                </md-not-found>
+                            </md-autocomplete>
+                        </div>
+
+                    </div>
+
+                    <div ng-if="vm.endOfChain">
+                        <h3>End of questions</h3>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+    </section>
+
+
+</md-content>
+
+
+

@@ -1,0 +1,30 @@
+<md-dialog flex="30" class="addUserVariability">
+    <div class="createWindow">
+        <md-toolbar class="view-head" layout="row" layout-align="center center">
+            <p>Please enter your variable</p>
+        </md-toolbar>
+        <div class="content">
+            <div class="allInput">
+                <form name="vm.varForm">
+                    <md-input-container>
+                        <label>Name variable</label>
+                        <input type="text" ng-model="vm.data.text" md-autofocus type="text"
+                               name="name" required maxlength="15">
+                        <div ng-messages="vm.varForm.name.$error">
+                            <div ng-message="required">This is required.</div>
+                        </div>
+                    </md-input-container>
+                </form>
+            </div>
+            <div class="bot-btn" layout="" layout-align="space-between">
+                <md-button class="md-raised md-primary" ng-click="vm.updateVariability()"
+                ng-if="vm.showUpdateButton">Save</md-button>
+
+                <md-button class="md-raised md-primary" ng-click="vm.createVariability()"
+                ng-if="vm.showCreateButton">Create</md-button>
+
+                <md-button class="md-raised" ng-click="vm.close()">Cancel</md-button>
+            </div>
+        </div>
+    </div>
+</md-dialog>
